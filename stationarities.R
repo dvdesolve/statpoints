@@ -1,9 +1,9 @@
 ### stationarities.R
 ##
 ## This script finds all stationary points for function of two variables given as grid (e. g., file with "x" "y" "z" columns)
-## Grid size (dx, dy) can be arbitrary and vary along given range. For step-fixed grids numerical differentiation can be performed in much more efficient way
+## Grid bin size (dx, dy) can be arbitrary and vary along any given range. NB: for step-fixed grids numerical differentiation can be performed in much more efficient way
 
-# classificator for stationary points
+# stationary points classifier
 stat_type <- function(dx2, dy2, dxdy) {
     if (is.na(dx2) | is.na(dy2) | is.na(dxdy)) return("unk")
     if (dx2 * dy2 - dxdy^2 < 0) return("saddle")
@@ -42,7 +42,7 @@ z_func_dxdy <- function(x, y) {
 }
 
 # partial first- and second-order numerical derivatives of user function/dataframe
-# if grid sizes along x and y axes doesn't change then it's worth to calculate dx and dy before differentiation and use them directly in points selection
+# if grid sizes along x and y axes doesn't change then it's better to calculate dx and dy before differentiation and use them directly in points selection
 z_dx <- function(x, y) {
     pos_x <- which(df_x == x)
     
@@ -98,7 +98,7 @@ z_dxdy <- function(x, y) {
     return((df[which(df$y == yf & df$x == x), "dx"] - df[which(df$y == yb & df$x == x), "dx"]) / (yf - yb))
 }
 
-# just for test purposes; one can read necessary dataframe directly
+# just for test purposes; one can read necessary dataframe directly instead of two executing following lines
 df <- expand.grid("x" = seq(-10, 10, 0.2), "y" = seq(-10, 10, 0.2))
 df$z <- apply(df, 1, function(x) z_func(x["x"], x["y"]))
 
