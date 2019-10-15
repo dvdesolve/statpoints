@@ -50,7 +50,7 @@ z_dx <- function(x, y) {
     
     xf <- df_x[pos_x + 1]
     xb <- df_x[pos_x - 1]
-    
+
     return((df[which(df$x == xf & df$y == y), "z"] - df[which(df$x == xb & df$y == y), "z"]) / (xf - xb))
 }
 
@@ -116,7 +116,7 @@ df_y <- unique(df$y)
 df$dx <- apply(df, 1, function(x) z_dx(x["x"], x["y"]))
 df$dy <- apply(df, 1, function(x) z_dy(x["x"], x["y"]))
 
-# one can adjust tolerance of selection criteria (in units of function/data)
+# one can adjust tolerance of selection criteria (in units of [dependent variable]/[independent variable])
 tolerance_x <- 1.0
 tolerance_y <- 1.0
 
@@ -140,7 +140,7 @@ unks <- stationaries[which(stationaries$type == "unk"), ]
 library(ggplot2)
 ggplot(df, aes(x, y, z = z)) + stat_contour(geom = "polygon", aes(fill = ..level..)) +
     geom_raster(aes(fill = z), interpolate = TRUE) + stat_contour(binwidth = 100.0, size = 0.075, colour = "white") + xlab("x") + ylab("y") +
-    guides(fill = guide_colorbar(title = "z", barwidth = 15)) + scale_fill_gradient2(low = "green4", mid = "orange1", midpoint = (max(df$z) - min(df$z)) / 2, high = "firebrick3") + theme_bw() + theme(legend.position = "bottom", axis.title = element_text(size = 12), axis.text = element_text(size = 12), legend.title = element_text(size = 12), legend.text = element_text(size = 12)) +
+    guides(fill = guide_colorbar(title = "z", barwidth = 15)) + scale_fill_gradientn(colours = c("blue", "steelblue3", "green3", "yellow3", "orange1", "firebrick3")) + theme_bw() + theme(legend.position = "bottom", axis.title = element_text(size = 12), axis.text = element_text(size = 12), legend.title = element_text(size = 12), legend.text = element_text(size = 12)) +
     scale_x_continuous(expand = c(0, 0)) +
     scale_y_continuous(expand = c(0, 0)) +
-    geom_point(inherit.aes = FALSE, data = stationaries, aes(x, y, colour = type), pch = 20, size = 1.5) + scale_colour_manual(labels = c("max" = "Max", "min" = "Min", "saddle" = "Saddle", "unk" = "Unknown"), values = c("max" = "magenta", "min" = "chartreuse", "saddle" = "blue", "unk" = "black")) + guides(colour = guide_legend(title = "Type"))
+    geom_point(inherit.aes = FALSE, data = stationaries, aes(x, y, colour = type), pch = 20, size = 3.5) + scale_colour_manual(labels = c("max" = "Max", "min" = "Min", "saddle" = "Saddle", "unk" = "Unknown"), values = c("max" = "orangered", "min" = "olivedrab2", "saddle" = "purple1", "unk" = "black")) + guides(colour = guide_legend(title = "Type"))
