@@ -139,7 +139,7 @@ unks <- stationaries[which(stationaries$type == "unk"), ]
 # plot function and stationary points
 library(ggplot2)
 ggplot(df, aes(x, y, z = z)) + stat_contour(geom = "polygon", aes(fill = ..level..)) +
-    geom_raster(aes(fill = z), interpolate = TRUE) + stat_contour(binwidth = 100.0, size = 0.075, colour = "white") + xlab("x") + ylab("y") +
+    geom_raster(aes(fill = z), interpolate = TRUE) + stat_contour(binwidth = 100.0, size = 0.075, colour = "black") + xlab("x") + ylab("y") +
     guides(fill = guide_colorbar(title = "z", barwidth = 15)) + scale_fill_gradientn(colours = c("blue", "steelblue3", "green3", "yellow3", "orange1", "firebrick3")) + theme_bw() + theme(legend.position = "bottom", axis.title = element_text(size = 12), axis.text = element_text(size = 12), legend.title = element_text(size = 12), legend.text = element_text(size = 12)) +
     scale_x_continuous(expand = c(0, 0)) +
     scale_y_continuous(expand = c(0, 0)) +
